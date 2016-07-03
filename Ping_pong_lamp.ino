@@ -67,31 +67,18 @@ void loop() {
     toggle_funct();
   }
 }
-/*
-    
-    Serial.begin(9600);
-    Serial.print("Colour State: ");
-    Serial.println(colourState);
-   // delay(100);
-  }
-  else
-  {
-    buttonState = LOW;
-  }
 
-  if (colourState == 0){
-     digitalWrite(led, HIGH);
-     digitalWrite(led2, LOW);
-  }
-  else if (colourState == 1){
-     digitalWrite(led, LOW);
-     digitalWrite(led2, HIGH);
-  }
-  
-*/
 
 void toggle_funct()
 {
+   Serial.begin(9600);
+   Serial.print("Colour State: ");
+   Serial.println(colourState);
+   Serial.print("Debounce: ");
+   Serial.println(debounce);
+   // delay(100);
+
+  
   if (colourState == 0){
      digitalWrite(led1, LOW);
      digitalWrite(led2, LOW);
@@ -123,3 +110,22 @@ void toggle_funct()
   }
 }
 
+
+/*
+ *  // fade out from max to min in increments of 5 points:
+  for(int fadeValue = 255 ; fadeValue >= 0; fadeValue -=5) { 
+    // sets the value (range from 0 to 255):
+    analogWrite(ledPin, fadeValue);         
+    // wait for 30 milliseconds to see the dimming effect    
+    delay(20);                            
+  }
+  
+// fade in from min to max in increments of 5 points:
+  for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) { 
+    // sets the value (range from 0 to 255):
+    analogWrite(ledPin, fadeValue);         
+    // wait for 30 milliseconds to see the dimming effect    
+    delay(5);                            
+  } 
+  */
+ */
