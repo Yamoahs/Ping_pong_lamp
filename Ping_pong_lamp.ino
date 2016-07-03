@@ -18,34 +18,54 @@
 
 // constants won't change. They're used here to
 // set pin numbers:
-const int buttonPin = 2;     // the number of the pushbutton pin
-const int ledPin =  13;      // the number of the LED pin
-const int ledPin2 =  12;      // the number of the LED pin
+const int button = 2;     // the number of the pushbutton pin
+const int led1 =  13;      // the number of the LED pin
+const int led2 =  12;      // the number of the LED pin
+const int led3 =  11;      // the number of the LED pin
 const int MAX_COLOUR_STATES = 2;
 
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
 int lastButtonState = LOW;
 int colourState = 0;              //Determining which light to turn on
+int debounce = 0;           //Counter for the debounce time
+boolean buttonPressed = false;
+boolean toggle = false;
 
 void setup() {
   // initialize the LED pin as an output:
-  pinMode(ledPin, OUTPUT);
+  pinMode(led1, OUTPUT);
   // initialize the LED pin as an output:
-  pinMode(ledPin2, OUTPUT);
+  pinMode(led2, OUTPUT);
+  // initialize the LED pin as an output:
+  pinMode(led3, OUTPUT);
   // initialize the pushbutton pin as an input:
-  pinMode(buttonPin, INPUT);
+  pinMode(button, INPUT);
 }
 
-void loop() { 
-  // read the state of the pushbutton value:
-  buttonState = digitalRead(buttonPin);
-
-  if (debounceButton(buttonState) == HIGH && buttonState == LOW)
+void loop() {
+  // put your main code here, to run repeatedly:
+  if (digitalRead(button) ==HIGH)
   {
-    colourState++;
-    if (colourState == MAX_COLOUR_STATES) colourState = 0;
-    buttonState = HIGH;
+    debounce++;
+  }
+  else{
+    debounce = 0;
+    buttonPressed = false;
+    toggle = false;
+  }
+  if(debounce >= 5000) //Indicates how long you need to wait
+                      //before accepting that the button was pressed
+  {
+    buttonPressed = true;
+  }
+  if(buttonPressed == true && toggle == false)
+  {
+    toggle = true;
+    toggle_funct();
+  }
+}
+/*
     
     Serial.begin(9600);
     Serial.print("Colour State: ");
@@ -58,37 +78,19 @@ void loop() {
   }
 
   if (colourState == 0){
-     digitalWrite(ledPin, HIGH);
-     digitalWrite(ledPin2, LOW);
+     digitalWrite(led, HIGH);
+     digitalWrite(led2, LOW);
   }
   else if (colourState == 1){
-     digitalWrite(ledPin, LOW);
-     digitalWrite(ledPin2, HIGH);
+     digitalWrite(led, LOW);
+     digitalWrite(led2, HIGH);
   }
   
+*/
 
-  
-
-  
-/*
-  // check if the pushbutton is pressed.
-  // if it is, the buttonState is HIGH:
-  if (buttonState == HIGH) {
-    // turn LED on:
-    digitalWrite(ledPin, HIGH);
-  } else {
-    // turn LED off:
-    digitalWrite(ledPin, LOW);
-  }*/
-}
-
-boolean debounceButton(boolean state)
+void toggle_funct()
 {
-  boolean stateNow = digitalRead(buttonPin);
-  if (buttonState != stateNow){
-    delay(10);
-    stateNow = digitalRead(buttonPin);
-  }
-  return stateNow;
+  digitalWrite(led1, !digitalRead(led1));
+  digitalWrite(led2, !digitalRead(led2));
 }
 
