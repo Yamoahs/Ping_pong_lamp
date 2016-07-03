@@ -22,7 +22,7 @@ const int button = 2;     // the number of the pushbutton pin
 const int led1 =  13;      // the number of the LED pin
 const int led2 =  12;      // the number of the LED pin
 const int led3 =  11;      // the number of the LED pin
-const int MAX_COLOUR_STATES = 2;
+const int MAX_COLOUR_STATES = 5;
 
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
@@ -62,6 +62,8 @@ void loop() {
   if(buttonPressed == true && toggle == false)
   {
     toggle = true;
+    colourState++;
+    if(colourState == MAX_COLOUR_STATES) colourState = 0;
     toggle_funct();
   }
 }
@@ -90,7 +92,34 @@ void loop() {
 
 void toggle_funct()
 {
-  digitalWrite(led1, !digitalRead(led1));
-  digitalWrite(led2, !digitalRead(led2));
+  if (colourState == 0){
+     digitalWrite(led1, LOW);
+     digitalWrite(led2, LOW);
+     digitalWrite(led3, LOW);
+  }
+
+  else if (colourState == 1){
+     digitalWrite(led1, HIGH);
+     digitalWrite(led2, LOW);
+     digitalWrite(led3, LOW);
+  }
+
+  else if (colourState == 2){
+     digitalWrite(led1, LOW);
+     digitalWrite(led2, HIGH);
+     digitalWrite(led3, LOW);
+  }
+
+  else if (colourState == 3){
+     digitalWrite(led1, LOW);
+     digitalWrite(led2, LOW);
+     digitalWrite(led3, HIGH);
+  }
+
+  else if (colourState == 4){
+     digitalWrite(led1, HIGH);
+     digitalWrite(led2, HIGH);
+     digitalWrite(led3, HIGH);
+  }
 }
 
