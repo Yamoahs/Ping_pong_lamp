@@ -1,33 +1,24 @@
-/*
-  Button
+/*******************************************************************************
+@file     Ping_pong_lamp.ino
+@author   Samuel Yamoah
+@date     29.06.2016
+@modified 10.06.2016
+@brief    Main Code for Ping POng Ball Lamp. Each Ping Pong Ball will have an
+          RGB LED (72 total). Program will have solid RED, GREEN, BLUE, WHITE,
+          pulse WHITE & pulse RGB Spectrum.
+*******************************************************************************/
 
- Turns on and off a light emitting diode(LED) connected to digital
- pin 13, when pressing a pushbutton attached to pin 2.
-
-
- The circuit:
- * LED attached from pin 13 to ground
- * pushbutton attached to pin 2 from +5V
- * 10K resistor attached to pin 2 from ground
-
-
- This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/Button
- */
-
-// constants won't change. They're used here to
-// set pin numbers:
+// constants setup:
 const int button = 2;     // the number of the pushbutton pin
 const int led1 =  13;      // the number of the LED pin
 const int led2 =  12;      // the number of the LED pin
 const int led3 =  11;      // the number of the LED pin
-const int MAX_COLOUR_STATES = 5;
+const int MAX_COLOUR_STATES = 6;
 
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
 int lastButtonState = LOW;
-int colourState = 0;              //Determining which light to turn on
+int colourState = 0;         //Determining which light pattern to turn on
 int debounce = 0;           //Counter for the debounce time
 boolean buttonPressed = false;
 boolean toggle = false;
@@ -108,23 +99,23 @@ void toggle_funct()
      digitalWrite(led2, HIGH);
      digitalWrite(led3, HIGH);
   }
+
+  else if (colourState == 5){
+     // fade in from min to max in increments of 5 points:
+    for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) { 
+      // sets the value (range from 0 to 255):
+      analogWrite(led3, fadeValue);         
+      // wait for 30 milliseconds to see the dimming effect    
+      delay(30);                            
+    } 
+    
+    // fade out from max to min in increments of 5 points:
+      for(int fadeValue = 255 ; fadeValue >= 0; fadeValue -=5) { 
+      // sets the value (range from 0 to 255):
+      analogWrite(led3, fadeValue);         
+      // wait for 30 milliseconds to see the dimming effect    
+      delay(30);                            
+    }
+  }
 }
 
-
-/*
- *  // fade out from max to min in increments of 5 points:
-  for(int fadeValue = 255 ; fadeValue >= 0; fadeValue -=5) { 
-    // sets the value (range from 0 to 255):
-    analogWrite(ledPin, fadeValue);         
-    // wait for 30 milliseconds to see the dimming effect    
-    delay(20);                            
-  }
-  
-// fade in from min to max in increments of 5 points:
-  for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) { 
-    // sets the value (range from 0 to 255):
-    analogWrite(ledPin, fadeValue);         
-    // wait for 30 milliseconds to see the dimming effect    
-    delay(5);                            
-  } 
-  */
