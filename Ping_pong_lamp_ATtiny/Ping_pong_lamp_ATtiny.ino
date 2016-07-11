@@ -45,29 +45,15 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (digitalRead(button) ==HIGH)
-  {
-    debounce++;
-  }
-  else{
-    debounce = 0;
-    buttonPressed = false;
-    toggle = false;
-  }
-  if(debounce >= 5000) //Indicates how long you need to wait
-                      //before accepting that the button was pressed
-  {
-    buttonPressed = true;
-  }
-  if(buttonPressed == true && toggle == false)
-  {
+  debounceFunct();
+
+  if(buttonPressed == true && toggle == false){
     toggle = true;
     colourState++;
     if(colourState == MAX_COLOUR_STATES) colourState = 0;
     toggle_funct();
   }
 }
-
 
 void toggle_funct()
 {  
@@ -102,22 +88,23 @@ void toggle_funct()
   }
 
   else if (colourState == 5){
+    boolean quit = false;
     digitalWrite(led1, LOW);
     digitalWrite(led2, LOW);
     digitalWrite(led3, LOW);
 
-    while(1){
+    while(quit == false){
       // fade in from min to max in increments of 5 points:
       for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) { 
         // sets the value (range from 0 to 255):
         analogWrite(led3, fadeValue);         
         // wait for 30 milliseconds to see the dimming effect    
         delay(50);
-        if (digitalRead(button) ==HIGH){
-        colourState = 0;
-        break;
-       }                            
-      } 
+        
+       if (digitalRead(button) ==HIGH){
+        quit = true;
+       }
+     } 
       
       // fade out from max to min in increments of 5 points:
       for(int fadeValue = 255 ; fadeValue >= 0; fadeValue -=5) { 
@@ -125,19 +112,36 @@ void toggle_funct()
         analogWrite(led3, fadeValue);         
         // wait for 30 milliseconds to see the dimming effect    
         delay(50);
+
         if (digitalRead(button) ==HIGH){
-        colourState = 0;
-        break;
-       }                           
+        quit = true;
+       }                       
       }
+      
        analogWrite(led3, 0);
        delay(100);
        if (digitalRead(button) ==HIGH){
-        colourState = 0;
-        break;
+        quit = true;
        }
     }
+  colourState++;
+  if(colourState == MAX_COLOUR_STATES) colourState = 0;
   }
 }
 
-
+void debounceFunct(){
+  if (digitalRead(button) ==HIGH)
+  {
+    debounce++;
+  }
+  else{
+    debounce = 0;
+    buttonPressed = false;
+    toggle = false;
+  }
+  if(debounce >= 5000) //Indicates how long you need to wait
+                      //before accepting that the button was pressed
+  {
+    buttonPressed = true;
+  }
+}
