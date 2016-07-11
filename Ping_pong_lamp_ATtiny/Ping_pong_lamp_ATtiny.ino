@@ -1,23 +1,14 @@
-/*
-  Button
+/*******************************************************************************
+@file     Ping_pong_lamp_ATtiny.ino
+@author   Samuel Yamoah
+@date     29.06.2016
+@modified 11.06.2016
+@brief    Main Code for Ping POng Ball Lamp. Each Ping Pong Ball will have an
+          RGB LED (72 total). Program will have solid RED, GREEN, BLUE, WHITE,
+          pulse WHITE & pulse RGB Spectrum.
+*******************************************************************************/
 
- Turns on and off a light emitting diode(LED) connected to digital
- pin 13, when pressing a pushbutton attached to pin 2.
-
-
- The circuit:
- * LED attached from pin 13 to ground
- * pushbutton attached to pin 2 from +5V
- * 10K resistor attached to pin 2 from ground
-
-
- This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/Button
- */
-
-// constants won't change. They're used here to
-// set pin numbers:
+// constants setup:
 const int button = 2;     // the number of the pushbutton pin
 const int led1 =  3;      // the number of the LED pin
 const int led2 =  4;      // the number of the LED pin
@@ -43,8 +34,7 @@ void setup() {
   pinMode(button, INPUT);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop(){
   debounceFunct();
 
   if(buttonPressed == true && toggle == false){
@@ -55,8 +45,7 @@ void loop() {
   }
 }
 
-void toggle_funct()
-{  
+void toggle_funct(){  
   if (colourState == 0){
      digitalWrite(led1, LOW);
      digitalWrite(led2, LOW);
@@ -88,12 +77,12 @@ void toggle_funct()
   }
 
   else if (colourState == 5){
-    boolean quit = false;
+    bool quit = false;
     digitalWrite(led1, LOW);
     digitalWrite(led2, LOW);
     digitalWrite(led3, LOW);
 
-    while(quit == false){
+    while(quit != true){
       // fade in from min to max in increments of 5 points:
       for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) { 
         // sets the value (range from 0 to 255):
@@ -101,9 +90,11 @@ void toggle_funct()
         // wait for 30 milliseconds to see the dimming effect    
         delay(50);
         
-       if (digitalRead(button) ==HIGH){
-        quit = true;
-       }
+        if (digitalRead(button) == HIGH){
+          quit = true;
+          digitalWrite(led3, LOW);
+        }
+       
      } 
       
       // fade out from max to min in increments of 5 points:
@@ -113,16 +104,12 @@ void toggle_funct()
         // wait for 30 milliseconds to see the dimming effect    
         delay(50);
 
-        if (digitalRead(button) ==HIGH){
-        quit = true;
-       }                       
+        if (digitalRead(button) == HIGH) quit = true;                       
       }
       
        analogWrite(led3, 0);
        delay(100);
-       if (digitalRead(button) ==HIGH){
-        quit = true;
-       }
+       if (digitalRead(button) == HIGH) quit = true;
     }
   colourState++;
   if(colourState == MAX_COLOUR_STATES) colourState = 0;
@@ -130,7 +117,7 @@ void toggle_funct()
 }
 
 void debounceFunct(){
-  if (digitalRead(button) ==HIGH)
+  if (digitalRead(button) == HIGH)
   {
     debounce++;
   }
