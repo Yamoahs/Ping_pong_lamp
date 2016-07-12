@@ -90,10 +90,11 @@ void toggle_funct(){
         // wait for 30 milliseconds to see the dimming effect    
         delay(50);
         
-        if (digitalRead(button) == HIGH){
-          quit = true;
-          digitalWrite(led3, LOW);
-        }
+//        if (digitalRead(button) == HIGH){
+//          quit = true;
+//          digitalWrite(led3, LOW);
+//          digitalWrite(led2, HIGH);
+//        }
        
      } 
       
