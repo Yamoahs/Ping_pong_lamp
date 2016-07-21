@@ -10,8 +10,9 @@
 
 // constants setup:
 const int BLUE =  0;            //BLUE LED pin
-const int INPUT_A = 3;        //Output A to Controller 2
-const int INPUT_B = 4;        //Output B to Controller 2
+const int INPUT_A = 3;        //Input A to Controller 2
+const int INPUT_B = 4;        //Input B to Controller 2
+const int TEST = 1;        //Test
 
 
 void setup() {
@@ -21,26 +22,37 @@ void setup() {
   pinMode(INPUT_A, INPUT);
   // initialize Input B pin as an output:
   pinMode(INPUT_B, INPUT);
+  //test pin
+  pinMode(TEST, OUTPUT);
+  digitalWrite(TEST, LOW);
 }
 
 void loop(){
-  if(digitalRead(INPUT_A) == HIGH && digitalRead(INPUT_B) == LOW){
-    solid_blue_white();
-  }
-  else if (digitalRead(INPUT_B) == HIGH && digitalRead(INPUT_A) == LOW){
-    pulse_white();
-  }
-  else if (digitalRead(INPUT_A) == HIGH && digitalRead(INPUT_B) == HIGH){
-    rgb();
-  }
-  else{
-    digitalWrite(BLUE, LOW);
-  }
+    digitalWrite(TEST, LOW); 
+  delay(750);
+//  if(digitalRead(INPUT_A) == HIGH && digitalRead(INPUT_B) == LOW){
+//    solid_blue_white();
+//  }
+//  else if (digitalRead(INPUT_B) == HIGH && digitalRead(INPUT_A) == LOW){
+//    pulse_white();
+//  }
+//  else if (digitalRead(INPUT_A) == HIGH && digitalRead(INPUT_B) == HIGH){
+//    rgb();
+//  }
+//  else{
+//    digitalWrite(BLUE, LOW);
+//  }
+  digitalWrite(TEST, HIGH); 
+   delay(750);
+  
 }
 
 void solid_blue_white(){
   digitalWrite(BLUE, LOW);
-  digitalWrite(BLUE, HIGH);
+  //while(digitalRead(INPUT_A) == HIGH && digitalRead(INPUT_B) == LOW){
+    digitalWrite(BLUE, HIGH);
+  //}
+  //digitalWrite(BLUE, LOW);
 }
 
 void pulse_white(){
