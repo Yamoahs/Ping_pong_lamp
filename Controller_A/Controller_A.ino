@@ -2,7 +2,7 @@
 @file     Controller_A.ino
 @author   Samuel Yamoah
 @date     29.06.2016
-@modified 13.06.2016
+@modified 24.06.2016
 @brief    Main Code for Ping POng Ball Lamp. Each Ping Pong Ball will have an
           RGB LED (72 total). Program will have solid RED, GREEN, BLUE, WHITE,
           pulse WHITE & pulse RGB Spectrum.
