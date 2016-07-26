@@ -97,7 +97,7 @@ void toggle_funct(){
     digitalWrite(OUTPUT_A, LOW);
     digitalWrite(OUTPUT_B, HIGH);
 
-    while(quit != true){
+    //while(quit != true){
       // fade in from min to max in increments of 5 points:
       for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) {
         // sets the value (range from 0 to 255):
@@ -122,9 +122,10 @@ void toggle_funct(){
       analogWrite(GREEN, 0);
       delay(100);
       if (digitalRead(BUTTON) == HIGH) quit = true;
-    }
-  colourState++;
+    //}
+  //colourState++;
   //if(colourState == MAX_COLOUR_STATES) colourState = 0;
+  toggle_funct();
   }
 
 
