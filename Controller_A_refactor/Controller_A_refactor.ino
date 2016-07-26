@@ -125,7 +125,7 @@ void white(){
 
 //WHITE LIGHT PULSE
 void white_pulse(){
-  //bool quit = false;
+  bool quit = false;
   digitalWrite(RED, LOW);
   digitalWrite(GREEN, LOW);
   digitalWrite(OUTPUT_A, LOW);
@@ -148,12 +148,18 @@ void white_pulse(){
     // wait for 50 milliseconds to see the dimming effect
     delay(50);
 
-    //if (digitalRead(BUTTON) == HIGH) quit = true;
+    if (digitalRead(BUTTON) == HIGH) quit = true;
   }
 
   analogWrite(RED, 0);
   analogWrite(GREEN, 0);
   delay(100);
+  if (digitalRead(BUTTON) == HIGH) quit = true;
+
+  if (quit == true){
+    quit = false;
+    colourState++;
+  }
 }
 
 //RGB SPECTRUM
