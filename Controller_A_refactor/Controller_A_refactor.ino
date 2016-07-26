@@ -46,6 +46,7 @@ void loop(){
     if(colourState == MAX_COLOUR_STATES) colourState = 0;
     toggle_funct();
   }
+   toggle_funct();
 }
 
 //Function selects the colour state
@@ -238,7 +239,7 @@ void debounceFunct(){
     buttonPressed = false;
     toggle = false;
   }
-  if(debounce >= 5000) //Indicates how long you need to wait
+  if(debounce >= 500) //Indicates how long you need to wait
                       //before accepting that the BUTTON was pressed
   {
     buttonPressed = true;
